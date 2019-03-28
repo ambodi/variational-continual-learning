@@ -15,7 +15,7 @@ lr = 1e-4
 K_mc = 10
 checkpoint = -1
 
-data_path = # TODO 
+data_path = './notMNIST_small'
 
 def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint, lbd):
     # set up dataset specific stuff
@@ -65,7 +65,7 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
     
     n_layers_head = 2
     n_layers_enc = n_layers_shared + n_layers_head - 1
-    for task in xrange(1, N_task+1):
+    for task in range(1, N_task+1):
         # first load data
         # first load data
         if data_name == 'mnist':
@@ -90,7 +90,7 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
         # plot samples
         x_gen_list = sess.run(gen_ops, feed_dict={batch_size_ph: N_gen})
         x_list = []
-        for i in xrange(len(x_gen_list)):
+        for i in range(len(x_gen_list)):
             ind = np.random.randint(len(x_gen_list[i]))
             x_list.append(x_gen_list[i][ind:ind+1])
         x_list = np.concatenate(x_list, 0)
@@ -103,7 +103,7 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
         
         # print test-ll on all tasks
         tmp_list = []
-        for i in xrange(len(eval_func_list)):
+        for i in range(len(eval_func_list)):
             print 'task %d' % (i+1),
             test_ll = eval_func_list[i](sess, X_test_list[i])
             tmp_list.append(test_ll)
@@ -115,7 +115,7 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
         print 'create path figs/visualisation/'
     plot_images(x_gen_all, shape_high, 'figs/visualisation/', data_name+'_gen_all_'+method)
     
-    for i in xrange(len(result_list)):
+    for i in range(len(result_list)):
         print result_list[i]
         
     # save results

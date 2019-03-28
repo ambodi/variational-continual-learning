@@ -39,6 +39,6 @@ def plot_images(images, shape, path, filename, n_rows = 10, color = True):
     #plt.axis('off')
     #plt.tight_layout()
     #plt.savefig(path + filename + ".png", format="png")
-    print "saving image to " + path + filename + ".png"
+    print("saving image to " + path + filename + ".png")
     plt.close()
 

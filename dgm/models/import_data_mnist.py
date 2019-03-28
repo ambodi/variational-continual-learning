@@ -61,8 +61,8 @@ def read(path, num_per_digit = 0, dataset = "training", seed = 0, digits = None)
 	num_data = len(img) / (rows * cols)
     images =  np.zeros([rows*cols, num_data])
     labels = np.zeros([10, num_data])
-    for j in xrange(num_digits):
-    	ind = [ k for k in xrange(size) if lbl[k] == digits[j] ]
+    for j in range(num_digits):
+    	ind = [ k for k in range(size) if lbl[k] == digits[j] ]
 	if len(ind) == 0:
 	    raise ValueError, "invalid digits, should be in range 0-9"   
 	if num_per_digit == 0 or num_per_digit > len(ind):
@@ -72,7 +72,7 @@ def read(path, num_per_digit = 0, dataset = "training", seed = 0, digits = None)
     	else:
     		np.random.seed(seed)
     		ind = np.random.permutation(ind)[:num_per_digit]  
-    	for i in xrange(num_per_digit):
+    	for i in range(num_per_digit):
 	    #print i, num_per_digit, len(ind), i* num_digits + j, ind[i]*rows*cols, (ind[i]+1)*rows*cols 
             images[:, i * num_digits + j] = img[ ind[i]*rows*cols : (ind[i]+1)*rows*cols ]
             labels[lbl[ind[i]], i * num_digits + j] = 1

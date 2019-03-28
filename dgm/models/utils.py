@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import time
-import cPickle
+import pickle
 import tensorflow as tf
 
 def load_data(data_name, path, labels = None, conv = False, seed = 0):
@@ -35,16 +35,16 @@ def save_params(sess, filename, checkpoint):
         param_dict[v.name] = sess.run(v)
     filename = filename + '_' + str(checkpoint)
     f = open(filename + '.pkl', 'w')
-    cPickle.dump(param_dict, f, protocol=cPickle.HIGHEST_PROTOCOL)
-    print 'parameters saved at ' + filename + '.pkl'    
+    pickle.dump(param_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+    print('parameters saved at ' + filename + '.pkl')   
     f.close()
 
 def load_params(sess, filename, checkpoint, init_all = True):
     params = tf.trainable_variables()
     filename = filename + '_' + str(checkpoint)
     f = open(filename + '.pkl', 'r')
-    param_dict = cPickle.load(f)
-    print 'param loaded', len(param_dict)
+    param_dict = pickle.load(f)
+    print('param loaded', len(param_dict))
     f.close()
     ops = []
     for v in params:
@@ -56,4 +56,4 @@ def load_params(sess, filename, checkpoint, init_all = True):
         all_var = tf.all_variables()
         var = [v for v in all_var if v not in params]
         sess.run(tf.initialize_variables(var))
-    print 'loaded parameters from ' + filename + '.pkl'
+    print('loaded parameters from ' + filename + '.pkl')

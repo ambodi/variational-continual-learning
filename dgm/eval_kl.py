@@ -17,7 +17,7 @@ lr = 1e-4
 K_mc = 10
 checkpoint = -1
 
-data_path = # TODO
+data_path = './notMNIST_small'
 
 def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint, lbd):
     # set up dataset specific stuff
@@ -71,15 +71,15 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
             _, X_test, _, Y_test = load_notmnist(data_path, [task], conv = False)
         test_acc = 0.0; test_kl = 0.0
         N_test = X_test.shape[0]
-        for i in xrange(N_test / batch_size):
+        for i in range(N_test / batch_size):
             indl = i * batch_size; indr = min((i+1)*batch_size, N_test)
             tmp1, tmp2 = sess.run((acc, kl), feed_dict={X_ph: X_test[indl:indr],
                                        y_ph: Y_test[indl:indr],
                                        keras.backend.learning_phase(): 0})
             test_acc += tmp1 / (N_test / batch_size)
             test_kl += tmp2 / (N_test / batch_size)
-        print 'classification accuracy on test data', test_acc
-        print 'kl on test data', test_kl
+        print('classification accuracy on test data', test_acc)
+        print('kl on test data', test_kl)
 
     # now start fitting
     N_task = len(labels)
@@ -88,7 +88,7 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
 
     n_layers_head = 2
     n_layers_enc = n_layers_shared + n_layers_head - 1
-    for task in xrange(1, N_task+1):
+    for task in range(1, N_task+1):
         
         # define the head net and the generator ops
         dec = generator(generator_head(dimZ, dimH, n_layers_head, 'gen_%d' % task), dec_shared)
@@ -100,14 +100,14 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
         
         # print test-ll on all tasks
         tmp_list = []
-        for i in xrange(len(eval_func_list)):
-            print 'task %d' % (i+1),
+        for i in range(len(eval_func_list)):
+            print('task %d' % (i+1))
             kl = eval_func_list[i](sess)
             tmp_list.append(kl)
         result_list.append(tmp_list)
     
-    for i in xrange(len(result_list)):
-        print result_list[i]
+    for i in range(len(result_list)):
+        print(result_list[i])
         
     # save results
     fname = 'results/' + data_name + '_%s_gen_class.pkl' % string

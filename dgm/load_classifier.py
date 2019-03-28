@@ -19,7 +19,7 @@ def load_model(data_name = 'mnist'):
     n_layer = 3
     model.add(Dense(dimH, activation='relu', input_shape=(784,)))
     model.add(Dropout(0.2))
-    for _ in xrange(n_layer-1):
+    for _ in range(n_layer-1):
         model.add(Dense(dimH, activation='relu'))
         model.add(Dropout(0.2))
     model.add(Dense(num_classes, activation='softmax'))

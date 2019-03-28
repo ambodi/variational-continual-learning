@@ -16,7 +16,7 @@ def compute_fisher(X_ph, batch_size_ph, bound, N_data):
     # so the Fisher information matrix can be inaccurate!
     # assume lowerbound is of shape (batch_size)
     batch_size = X_ph.get_shape().as_list()[0]
-    for i in xrange(batch_size):
+    for i in range(batch_size):
         grad_square = tf.gradients(bound[i], var_list)
         for v in range(len(F_accum)):
             F_accum[v] += grad_square[v]**2 / batch_size
@@ -93,10 +93,10 @@ def construct_optimizer(X_ph, batch_size_ph, bound, N_data, laplace_loss):
         print "training for %d epochs with lr=%.5f" % (n_iter, lr)
         begin = time.time()
         n_iter_vae = N / batch_size
-        for iteration in xrange(1, n_iter + 1):
+        for iteration in range(1, n_iter + 1):
             ind_s = np.random.permutation(range(N))
             bound_total = 0.0
-            for j in xrange(0, n_iter_vae):
+            for j in range(0, n_iter_vae):
                 indl = j * batch_size
                 indr = (j+1) * batch_size
                 ind = ind_s[indl:min(indr, N)]

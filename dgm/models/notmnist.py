@@ -10,7 +10,7 @@ def load_notmnist(path, digits = None, conv = False, seed=0):
     X = X.transpose(2, 0, 1)
     X /= 255.0
     # collect the corresponding digits
-    print X.shape, Y.shape
+    print(X.shape, Y.shape)
     if digits is not None:
         ind = []
         for i in digits:

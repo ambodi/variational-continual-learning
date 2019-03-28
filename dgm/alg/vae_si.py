@@ -5,7 +5,7 @@ import time
     
 def update_si_reg(sess, si_reg, new_params, old_params, w_params):
     if si_reg is None:
-        si_reg = [0.0 for i in xrange(len(old_params))]
+        si_reg = [0.0 for i in range(len(old_params))]
     for i in range(len(old_params)):
         delta = new_params[i] - old_params[i]
         si_reg[i] += w_params[i] / (delta ** 2 + 1e-6)
@@ -37,7 +37,7 @@ def construct_optimizer(X_ph, batch_size_ph, bound, N_data, si_reg, old_params, 
     loss_task = -bound #* N_data
     si_loss = 0.0
     if old_params is not None:
-        for i in xrange(len(si_reg)):
+        for i in range(len(si_reg)):
             si_loss += 0.5 * lbd * tf.reduce_sum(si_reg[i]*(shared_var_list[i] - old_params[i])**2)
     loss_total = (loss_task + si_loss) #/ N_data
     batch_size = X_ph.get_shape().as_list()[0]
@@ -54,7 +54,7 @@ def construct_optimizer(X_ph, batch_size_ph, bound, N_data, si_reg, old_params, 
         _, logp, grad = sess.run(ops, feed_dict={X_ph: X, lr_ph: lr,
                                                  batch_size_ph: X.shape[0]})
         new_params = sess.run(shared_var_list)
-        for i in xrange(len(w_params)):
+        for i in range(len(w_params)):
             w_params[i] += grad[i] * (new_params[i] - old_params[i])
         return logp, new_params, w_params
 
@@ -66,11 +66,11 @@ def construct_optimizer(X_ph, batch_size_ph, bound, N_data, si_reg, old_params, 
         old_params = sess.run(shared_var_list)
         if w_params is None:
             w_params = [np.zeros(old_params[i].shape) \
-                        for i in xrange(len(old_params))]        
-        for iteration in xrange(1, n_iter + 1):
+                        for i in range(len(old_params))]        
+        for iteration in range(1, n_iter + 1):
             ind_s = np.random.permutation(range(N))
             bound_total = 0.0
-            for j in xrange(0, n_iter_vae):
+            for j in range(0, n_iter_vae):
                 indl = j * batch_size
                 indr = (j+1) * batch_size
                 ind = ind_s[indl:min(indr, N)]
