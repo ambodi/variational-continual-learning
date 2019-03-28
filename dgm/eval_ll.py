@@ -104,7 +104,7 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
         # print test-ll on all tasks
         tmp_list = []
         for i in range(len(eval_func_list)):
-            print 'task %d' % (i+1),
+            print('task %d' % (i+1))
             test_ll = eval_func_list[i](sess, X_test_list[i])
             tmp_list.append(test_ll)
         result_list.append(tmp_list)
@@ -112,17 +112,17 @@ def main(data_name, method, dimZ, dimH, n_channel, batch_size, K_mc, checkpoint,
     #x_gen_all = 1.0 - x_gen_all
     if not os.path.isdir('figs/visualisation/'):
         os.mkdir('figs/visualisation/')
-        print 'create path figs/visualisation/'
+        print('create path figs/visualisation/')
     plot_images(x_gen_all, shape_high, 'figs/visualisation/', data_name+'_gen_all_'+method)
     
     for i in range(len(result_list)):
-        print result_list[i]
+        print(result_list[i])
         
     # save results
     fname = 'results/' + data_name + '_%s.pkl' % string
     import pickle
     pickle.dump(result_list, open(fname, 'wb'))
-    print 'test-ll results saved in', fname
+    print('test-ll results saved in', fname)
 
 if __name__ == '__main__':
     data_name = str(sys.argv[1])
